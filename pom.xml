@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>CMPG323</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+    </properties>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <modules>
+        <module>AccountSystemDomain</module>
+        <module>AccountSystemRepository</module>
+        <module>AccountSystemTranslator</module>
+        <module>AccountSystemLogic</module>
+        <module>AccountSystemWebSpringBoot</module>
+        <module>AccountSystemWeb</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>za.ac.nwu.ac</groupId>
+            <artifactId>AccountSystemDomain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>za.ac.nwu.ac</groupId>
+            <artifactId>AccountSystemLogic</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+    @SpringBootApplication
+    public class RestServiceApplication {
+    public static void main(String[] args) {
+    SpringApplication.run(RestServiceApplication.class, args);
+    }
+    }
+    server.port=8090
+    server:
+    port : 8090
+
+    <springfox-swagger.version>2.9.2</springfox-swagger.version>
+    <swagger.version>1.5.20</swagger.version>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.annotation</groupId>
+                        <artifactId>jackson.annotation</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-bean-validators</artifactId>
+                <version>${springfox-swagger.version}</version>
+                <exclusions>
+                    <exclusion>
+                        8
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+    <dependency>
+        <groupId>za.ac.nwu.ac</groupId>
+        <artifactId>AccountSystemDomain</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>za.ac.nwu.ac</groupId>
+        <artifactId>AccountSystemLogic</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger2</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>io.swagger</groupId>
+        <artifactId>swagger-annotations</artifactId>
+    </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-bean-validators</artifactId>
+        </dependency>
+    </dependencies>
+
+    swagger.application.name=AccountSystem
+    # The @ delimiter is used to get config properties from the POM
+    swagger.application.description=@project.description@
+    swagger.application.version=@project.version@
+
+    import org.springframework.beans.factory.annotation.Value;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.context.annotation.Import;
+    import org.springframework.web.bind.annotation.RestController;
+    import springfox.documentation.builders.PathSelectors;
+    import springfox.documentation.builders.RequestHandlerSelectors;
+    import springfox.documentation.service.ApiInfo;
+    import springfox.documentation.service.Contact;
+    import springfox.documentation.spi.DocumentationType;
+    import springfox.documentation.spring.web.plugins.Docket;
+    import springfox.documentation.swagger2.annotations.EnableSwagger2;
+    import java.util.Collections;
+    @Configuration
+    @EnableSwagger2
+    @Import(springfox.bean.validators.configuration.BeanValidatorPluginsConfigur
+    ation.class)
+    public class SwaggerConfiguration {
+    @Value("${swagger.application.version}")
+    private String applicationVersion;
+    @Value("${swagger.application.name}")
+    private String applicationName;
+    @Value("${swagger.application.description}")
+    private String applicationDescription;
+    @Bean
+    public Docket api() {
+    return new Docket(DocumentationType.SWAGGER_2)
+    .select()
+    .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
+    .paths(PathSelectors.any())
+    .build()
+    .pathMapping("/")
+    .apiInfo(apiInfo());
+    }
+    private ApiInfo apiInfo() {
+    return new ApiInfo(
+    applicationName,
+    applicationDescription,
+    applicationVersion,
+    "",
+    new Contact("Your Name or Team Name", "", "email address"),
+    "",
+    "",
+    Collections.emptyList());
+    }
+    }
+
+    import org.springframework.context.annotation.ComponentScan;
+    import org.springframework.context.annotation.Configuration;
+    @Configuration
+    @ComponentScan(basePackages = {
+    "za.ac.nwu.ac.web.sb.controller",
+    "za.ac.nwu.ac.web.sb.exception"
+    })
+    public class WebConfig {
+    }
+    spring.application.name=AccountSystem
+    server.servlet.context-path=/account-system
+    spring.mvc.servlet.path=/mvc
+    @GetMapping("/ping")
+    @ApiOperation(value = "Echo the Ping.", notes = "This echo the ping back to
+    the client")
+    @ApiResponses(value = {
+    @ApiResponse(code = 200, message = "The Ping was received and
+    echoed", response = GeneralResponse.class),
+    @ApiResponse(code = 400, message = "Bad Request", response =
+    GeneralResponse.class),
+    @ApiResponse(code = 404, message = "Not found", response =
+    GeneralResponse.class),
+    @ApiResponse(code = 500, message = "Internal Server Error", response
+    = GeneralResponse.class)})
+    public ResponseEntity<String> ping(
+    @RequestParam(value = "value that will be echoed", defaultValue =
+    "pong")
+    String echo) {
+    return new ResponseEntity<>(echo, HttpStatus.OK);
+    }
+    <dependency>
+        <groupId>javax.persistence</groupId>
+        <artifactId>javax.persistence-api</artifactId>
+        <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-java8</artifactId>
+        <scope>provided</scope>
+    </dependency>
+
+    import org.springframework.boot.autoconfigure.domain.EntityScan;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.context.annotation.PropertySource;
+    import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+    import
+    org.springframework.transaction.annotation.EnableTransactionManagement;
+    @Configuration
+    @EnableTransactionManagement
+    @EnableJpaRepositories("za.ac.nwu.ac.repo.persistence")
+    @EntityScan("za.ac.nwu.ac.domain.persistence")
+    @PropertySource(value = "classpath:application-db.properties")
+    public class RepositoryConfig {
+    }
+
+    @Repository
+    public interface AccountTypeRepository extends JpaRepository<AccountType,
+    Long> {
+    }
+
+    spring.datasource.url=Your_DB_connection_URL
+    spring.datasource.username=username
+    spring.datasource.password=password
+    spring.datasource.driver-class-name=Your_driver
+    #hibernate config
+    spring.jpa.database-platform=org.hibernate.dialect.DialectForYourDB
+
+    import org.springframework.context.annotation.ComponentScan;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.context.annotation.Import;
+    import za.ac.nwu.ac.logic.config.LogicConfig;
+    @Import({LogicConfig.class})
+    @Configuration
+    @ComponentScan(basePackages = {
+    "za.ac.nwu.ac.web.sb.controller",
+    "za.ac.nwu.ac.web.sb.exception"
+    })
+    public class WebConfig {
+    }
+
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-inline</artifactId>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    import org.junit.After;
+    import org.junit.Before;
+    import org.junit.Test;
+    import org.junit.runner.RunWith;
+    import org.mockito.InjectMocks;
+    import org.mockito.Mock;
+    import org.mockito.junit.MockitoJUnitRunner;
+    import za.ac.nwu.ac.domain.dto.AccountTypeDto;
+    import za.ac.nwu.ac.translator.AccountTypeTranslator;
+    import static org.junit.Assert.fail;
+    import static org.mockito.ArgumentMatchers.any;
+    import static org.mockito.Mockito.*;
+    @RunWith(MockitoJUnitRunner.class)
+    public class TheClassToTestTest {
+    @Mock
+    private AccountTypeTranslator mock;
+    @InjectMocks
+    private CreateAccountTypeFlowImpl classToTest;
+    @Before
+    public void setUp() throws Exception {
+    // What happens before each test
+    }
+    @After
+    public void tearDown() throws Exception {
+    // What happens after each test
+    }
+    @Test
+    public void test() {
+    // Write a test here
+    }
+    }
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    import org.springframework.boot.autoconfigure.domain.EntityScan;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.context.annotation.PropertySource;
+    import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+    import
+    org.springframework.transaction.annotation.EnableTransactionManagement;
+    @Configuration
+    @EnableTransactionManagement
+    @EnableJpaRepositories("za.ac.nwu.ac.repo.persistence")
+    @EntityScan("za.ac.nwu.ac.domain.persistence")
+    @PropertySource(value = "classpath:application-test-db.properties")
+    public class RepositoryTestConfig {
+    }
+
+    #hibernate config
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.format_sql=true
+
+    package za.ac.nwu.ac.repo.persistence;
+    import org.junit.After;
+    import org.junit.Before;
+    import org.junit.Test;
+    import org.junit.runner.RunWith;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+    import org.springframework.test.context.ContextConfiguration;
+    import org.springframework.test.context.junit4.SpringRunner;
+    import za.ac.nwu.ac.domain.dto.AccountTypeDto;
+    import za.ac.nwu.ac.domain.persistence.AccountType;
+    import za.ac.nwu.ac.repo.config.RepositoryTestConfig;
+    import static org.junit.Assert.*;
+    @RunWith(SpringRunner.class)
+    @DataJpaTest
+    @ContextConfiguration(classes = {RepositoryTestConfig.class})
+    public class YourRepositoryTest {
+    @Autowired
+    YourRepository repository;
+    @Before
+    public void setUp() throws Exception {
+    // What happens before each test
+    }
+    @After
+    public void tearDown() throws Exception {
+    // What happens after each test
+    }
+    @Test
+    public void test() {
+    // Write a test here
+    }
+    }
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    package za.ac.nwu.ac.web.sb.controller;
+    import org.junit.Before;
+    import org.junit.Test;
+    import org.junit.runner.RunWith;
+    import org.mockito.InjectMocks;
+    import org.mockito.Mock;
+    import org.mockito.junit.MockitoJUnitRunner;
+    import
+    org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+    ;
+    import org.springframework.boot.test.context.SpringBootTest;
+    import org.springframework.http.MediaType;
+    import org.springframework.test.web.servlet.MockMvc;
+    import org.springframework.test.web.servlet.MvcResult;
+    import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+    import za.ac.nwu.ac.domain.dto.AccountTypeDto;
+    import za.ac.nwu.ac.logic.flow.CreateAccountTypeFlow;
+    import za.ac.nwu.ac.logic.flow.FetchAccountTypeFlow;
+    import za.ac.nwu.ac.logic.flow.ModifyAccountTypeFlow;
+    import java.time.LocalDate;
+    import java.util.ArrayList;
+    import java.util.List;
+    import static org.junit.Assert.assertEquals;
+    import static org.mockito.AdditionalAnswers.returnsFirstArg;
+    import static org.mockito.ArgumentMatchers.any;
+    import static org.mockito.ArgumentMatchers.anyString;
+    import static org.mockito.ArgumentMatchers.eq;
+    import static org.mockito.ArgumentMatchers.isNull;
+    import static org.mockito.Mockito.never;
+    import static org.mockito.Mockito.times;
+    import static org.mockito.Mockito.verify;
+    import static org.mockito.Mockito.when;
+    import static
+    org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+    import static
+    org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+    import static
+    org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+    import static
+    org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+    import static
+    org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+    @RunWith(MockitoJUnitRunner.class)
+    @SpringBootTest
+    @AutoConfigureMockMvc
+    public class AccountTypeControllerTest {
+    private static final String APP_URL = "/account-system/mvc";
+    private static final String ACCOUNT_TYPE_CONTROLLER_URL = APP_URL +
+    "/account-type";
+
+    private FetchAccountTypeFlow fetchAccountTypeFlow;
+    @Mock
+    private CreateAccountTypeFlow createAccountTypeFlow;
+    @Mock
+    private ModifyAccountTypeFlow modifyAccountTypeFlow;
+    @InjectMocks
+    private AccountTypeController controller;
+    private MockMvc mockMvc;
+    @Before
+    public void setUp() {
+    mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
+    @Test
+    public void getAll() throws Exception {
+    String expectedResponse = "{\"successful\":true,\"payload\":[" +
+    "{\"mnemonic\":\"MILES\",\"accountTypeName\":\"Miles account
+    type\",\"creationDate\":[2020,1,1]}," +
+    "{\"mnemonic\":\"PLAY\",\"accountTypeName\":\"Play account
+    type\",\"creationDate\":[2021,4,1]}]}";
+    List<AccountTypeDto> accountTypes = new ArrayList<>();
+    accountTypes.add(new AccountTypeDto("MILES", "Miles account type",
+    LocalDate.parse("2020-01-01")));
+    accountTypes.add(new AccountTypeDto("PLAY", "Play account type",
+    LocalDate.parse("2021-04-01")));
+    when(fetchAccountTypeFlow.getAllAccountTypes()).thenReturn(accountTypes);
+    MvcResult mvcResult = mockMvc.perform(get((String.format("%s/%s",
+    ACCOUNT_TYPE_CONTROLLER_URL, "all")))
+    .servletPath(APP_URL)
+    .accept(MediaType.APPLICATION_JSON)
+    .contentType(MediaType.APPLICATION_JSON))
+    .andExpect(status().isOk())
+    .andReturn();
+    verify(fetchAccountTypeFlow, times(1)).getAllAccountTypes();
+    assertEquals(expectedResponse,
+    mvcResult.getResponse().getContentAsString());
+    }
+    @Test
+    public void create() throws Exception {
+    String accountTypeToBeCreated =
+    "{\"mnemonic\":\"MILES\",\"accountTypeName\":\"Miles account
+    type\",\"creationDate\":[2020,1,1]},";
+    String expectedResponse = "{\"successful\":true,\"payload\":" +
+    "{\"mnemonic\":\"MILES\",\"accountTypeName\":\"Miles account
+    type\",\"creationDate\":[2020,1,1]}}";
+
+    AccountTypeDto accountType = new AccountTypeDto("MILES", "Miles
+    account type", LocalDate.parse("2020-01-01"));
+    when(createAccountTypeFlow.create(eq(accountType))).then(returnsFirstArg());
+    MvcResult mvcResult =
+    mockMvc.perform(post(ACCOUNT_TYPE_CONTROLLER_URL)
+    .servletPath(APP_URL)
+    .accept(MediaType.APPLICATION_JSON)
+    .content(accountTypeToBeCreated)
+    .contentType(MediaType.APPLICATION_JSON))
+    .andExpect(status().isCreated())
+    .andReturn();
+    verify(createAccountTypeFlow, times(1)).create(eq(accountType));
+    assertEquals(expectedResponse,
+    mvcResult.getResponse().getContentAsString());
+    }
+    @Test
+    public void deleteAccountType() throws Exception {
+    String expectedResponse = "{\"successful\":true,\"payload\":" +
+    "{\"mnemonic\":\"PLAY\",\"accountTypeName\":\"Play account
+    type\",\"creationDate\":[2021,4,1]}}";
+    AccountTypeDto accountType = new AccountTypeDto("PLAY", "Play
+    account type", LocalDate.parse("2021-04-01"));
+    when(modifyAccountTypeFlow.deleteAccountType(anyString())).thenReturn(accoun
+    tType);
+    MvcResult mvcResult = mockMvc.perform(delete((String.format("%s/%s",
+    ACCOUNT_TYPE_CONTROLLER_URL, "PLAY")))
+    .servletPath(APP_URL)
+    .accept(MediaType.APPLICATION_JSON)
+    .contentType(MediaType.APPLICATION_JSON))
+    .andExpect(status().isOk())
+    .andReturn();
+    verify(modifyAccountTypeFlow,
+    times(1)).deleteAccountType(eq("PLAY"));
+    assertEquals(expectedResponse,
+    mvcResult.getResponse().getContentAsString());
+    }
+    @Test
+    public void updateAccountType() throws Exception {
+    String expectedResponse = "{\"successful\":true,\"payload\":" +
+    "{\"mnemonic\":\"PLAY\",\"accountTypeName\":\"The new Play
+    account type name\",\"creationDate\":[2021,4,1]}}";
+    AccountTypeDto accountType = new AccountTypeDto("PLAY", "The new
+    Play account type name",
+    LocalDate.parse("2021-04-01"));
+
+    when(modifyAccountTypeFlow.updateAccountType(anyString(),
+    anyString(), any(LocalDate.class))).thenReturn(accountType);
+    MvcResult mvcResult = mockMvc.perform(put((String.format("%s/%s",
+    ACCOUNT_TYPE_CONTROLLER_URL, "PLAY")))
+    .param("newAccountTypeName", "The new Play account
+    type name")
+    .param("newCreationDate", "2021-04-01")
+    .servletPath(APP_URL)
+    .accept(MediaType.APPLICATION_JSON)
+    .contentType(MediaType.APPLICATION_JSON))
+    .andExpect(status().isOk())
+    .andReturn();
+    verify(modifyAccountTypeFlow,
+    times(1)).updateAccountType(eq("PLAY"),
+    eq("The new Play account type name"),
+    eq(LocalDate.parse("2021-04-01")));
+    assertEquals(expectedResponse,
+    mvcResult.getResponse().getContentAsString());
+    }
+    @Test
+    public void updateAccountTypeWithNoOptionalDate() throws Exception {
+    String expectedResponse = "{\"successful\":true,\"payload\":" +
+    "{\"mnemonic\":\"PLAY\",\"accountTypeName\":\"The new Play
+    account type name\",\"creationDate\":[2021,9,1]}}";
+    AccountTypeDto accountType = new AccountTypeDto("PLAY", "The new
+    Play account type name",
+    LocalDate.parse("2021-09-01"));
+    when(modifyAccountTypeFlow.updateAccountType(anyString(),
+    anyString(), isNull())).thenReturn(accountType);
+    MvcResult mvcResult = mockMvc.perform(put((String.format("%s/%s",
+    ACCOUNT_TYPE_CONTROLLER_URL, "PLAY")))
+    .param("newAccountTypeName", "The new Play account
+    type name")
+    .servletPath(APP_URL)
+    .accept(MediaType.APPLICATION_JSON)
+    .contentType(MediaType.APPLICATION_JSON))
+    .andExpect(status().isOk())
+    .andReturn();
+    verify(modifyAccountTypeFlow,
+    times(1)).updateAccountType(eq("PLAY"),
+    eq("The new Play account type name"), eq(null));
+    assertEquals(expectedResponse,
+    mvcResult.getResponse().getContentAsString());
+    }
+    @Test
+    public void updateAccountTypeObitMandatory() throws Exception {
+    mockMvc.perform(put((String.format("%s/%s",
+    ACCOUNT_TYPE_CONTROLLER_URL, "PLAY")))
+
+    .servletPath(APP_URL)
+    .accept(MediaType.APPLICATION_JSON)
+    .contentType(MediaType.APPLICATION_JSON))
+    .andExpect(status().isBadRequest())
+    .andReturn();
+    verify(modifyAccountTypeFlow,
+    never()).updateAccountType(anyString(), anyString(), any(LocalDate.class));
+    verify(modifyAccountTypeFlow,
+    never()).updateAccountType(anyString(), anyString(), isNull());
+    verify(modifyAccountTypeFlow,
+    never()).updateAccountType(anyString(), isNull(), isNull());
+    }
+    }
+
+    <configuration scan="true" scanPeriod="30 seconds">
+        <property name="LOG_DIR" value="/DO/nwu/log_output"/>
+        <appender name="ROLLING_FILE"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_DIR}/AccountSystem.log</file>
+            <encoder
+                    class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>{ "date" : "%d{dd-MM-yyyy HH:mm:ss.SSS}", "level" : "%-
+                    5level", "class" : "%logger{36}", " Log" :
+                    %msg }%n
+                </Pattern>
+            </encoder>
+            <rollingPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>${LOG_DIR}/AccountSystem.%d{yyyy-MMdd_
+                    HH}.%i.log.gz</fileNamePattern>
+                <!-- each file should be at most 50MB, keep 2 hours worth of
+                history, but at most 200MB -->
+                <maxFileSize>50MB</maxFileSize>
+                <maxHistory>10</maxHistory>
+                <totalSizeCap>200MB</totalSizeCap>
+            </rollingPolicy>
+        </appender>
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <Pattern>%highlight(%d{yyyy/MM/dd HH:mm:ss} [%-5level]
+                    %logger@%line -> %msg) %n</Pattern>
+            </encoder>
+        </appender>
+        <!-- Third party configurations -->
+        <logger name="java" level="WARN"/>
+        <logger name="javax" level="WARN"/>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="org.hibernate" level="WARN"/>
+        <!-- Your app logger -->
+        <logger name="za.ac.nwu.ac" level="DEBUG"/>
+        <root level="WARN">
+            <appender-ref ref="ROLLING_FILE"/>
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </configuration>
+
+    <configuration scan="true" scanPeriod="5 seconds">
+    <property name="LOG_DIR" value="/DO/nwu/log_output"/>
+    <appender name="ROLLING_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/ServerLog.log</file>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>{ "date" : "%d{dd-MM-yyyy HH:mm:ss.SSS}", "level" : "%-
+                5level", "class" : "%logger{36}", " Log" :
+                %msg }%n
+            </Pattern>
+        </encoder>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_DIR}/ServerLog.%d{yyyy-MMdd_
+                HH}.%i.log.gz</fileNamePattern>
+            <!-- each file should be at most 50MB, keep 2 hours worth of
+            history, but at most 200MB -->
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>200MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%highlight(%d{yyyy/MM/dd HH:mm:ss} [%-5level]
+                %logger@%line -> %msg) %n</Pattern>
+        </encoder>
+    </appender>
+    <!-- Third party configurations -->
+    <logger name="java" level="WARN"/>
+    <logger name="javax" level="WARN"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <root level="WARN">
+        <appender-ref ref="ROLLING_FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+    <appender name="ACCOUNT_SYSTEM_ROLLING_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_DIR}/AccountSystem.log</file>
+    <encoder
+            class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+    <Pattern>{ "date" : "%d{dd-MM-yyyy HH:mm:ss.SSS}", "level" : "%-
+    5level", "class" : "%logger{36}", " Log" :
+
+    </Pattern>
+    </encoder>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_DIR}/AccountSystem.%d{yyyy-MMdd_
+                HH}.%i.log.gz</fileNamePattern>
+            <!-- each file should be at most 50MB, keep 2 hours worth of
+            history, but at most 200MB -->
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>2</maxHistory>
+            <totalSizeCap>200MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+        <logger name="za.ac.nwu.ac" level="DEBUG" additivity="false">
+            <appender-ref ref="ACCOUNT_SYSTEM_ROLLING_FILE"/>
+            <appender-ref ref="STDOUT"/>
+        </logger>
+    </configuration>
+
+    logging.config=file:/DO/nwu/logback.xml
+
+
+</project>
